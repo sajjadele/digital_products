@@ -15,9 +15,11 @@ class Category(models.Model):
         verbose_name =_('Category')
         verbose_name_plural =_('Categories')
 
+    def __str__(self):
+        return self.title
 
 
-class Products(models.Model):
+class Product(models.Model):
     title = models.CharField(_('title'), max_length=50)
     description = models.TextField(_('description'), blank=True)
     avatar = models.ImageField(_('avatar'), blank=True, upload_to='products/')
@@ -34,8 +36,9 @@ class Products(models.Model):
 
 
 class File(models.Model):
-    product = models.ForeignKey("Products", verbose_name=_('product'), on_delete=models.CASCADE)
+    product = models.ForeignKey("Product", verbose_name=_('product'), on_delete=models.CASCADE)
     title = models.CharField(_('title'), max_length=50)
+    is_enable = models.BooleanField(_('is_enable'), default=True)
     file = models.FileField(_('file'), upload_to='files/%Y/%m/%d/')
     created_time = models.DateTimeField(_('created_time'), auto_now_add=True)
     updated_time = models.DateTimeField(_('updated_time'), auto_now=True)
